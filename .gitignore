@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# PyTorch / Model Files
+*.pth
+*.pt
+*.ckpt
+models/
+
+# Dataset / Large Files
+data/
+dataset/
+datasets/
+*.zip
+*.tar
+*.gz
+
+# Logs & Outputs
+*.log
+logs/
+outputs/
+
+# Reports & Generated Files
+reports/
+*.pdf
+*.png
+*.jpg
+*.jpeg
+
+# Database
+*.db
+*.sqlite3
+
+# Streamlit
+.streamlit/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment Variables
+.env
+.env.*
+
+# Misc
+*.bak
+*.tmp
