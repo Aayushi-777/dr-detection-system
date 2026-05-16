@@ -77,6 +77,7 @@ The system follows a **Deep Learning + Explainability pipeline**:
 ---
 
 ## 🏗️ Project Structure
+```
 DR_Project/
 ├── app/
 │ └── app.py # Streamlit application
@@ -106,6 +107,7 @@ DR_Project/
 ├── requirements.txt
 ├── .gitignore
 └── README.md
+```
 
 ---
 
