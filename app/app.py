@@ -172,17 +172,14 @@ if uploaded and os.path.exists(MODEL_PATH) and st.button("Generate PDF report"):
             save_combined_figure(
                 img_resized, overlay, lime_overlay if lime_overlay is not None else overlay,
                 pred_class, probs, active_regions, fig_path)
-            pdf_path=os.path.join(tmp, 'report.pdf')
-            generate_pdf_report(
-                patient_id, uploaded.name, fig_path,
-                pred_class, probs, active_regions, pdf_path)
+            pdf_path = generate_pdf_report(patient_id, uploaded.name, fig_path, pred_class, probs, active_regions)
             
-            with open(pdf_path, 'rb') as f:
-                st.download_button(
-                    "Download PDF", 
-                    data=f.read(),
-                    file_name=f"DR_Report_{patient_id}.pdf",
-                    mime="application/pdf")
+        with open(pdf_path, 'rb') as f:
+            st.download_button(
+                "Download PDF", 
+                data=f.read(),
+                file_name=os.path.basename(pdf_path),
+                mime="application/pdf")
 elif uploaded and not os.path.exists(MODEL_PATH):
     st.error("Please train the model first (run `python src/main_train.py`), "
              "then reload this app.")
@@ -228,7 +225,9 @@ try:
     if all_preds:
         recent_data = []
         all_preds_sorted = sorted(all_preds, key=lambda x: x.created_at, reverse=True)
-        for i, p in enumerate(all_preds_sorted[:10]): 
+        from datetime import timedelta
+        for i, p in enumerate(all_preds_sorted[:10]):
+            ist_time=p.created_at+timedelta(hours=5, minutes=30) 
             recent_data.append({
                 "ID": i,
                 "Patient": p.patient_id,
@@ -237,7 +236,7 @@ try:
                 "Confidence": f"{p.confidence*100:.1f}%",
                 "Risk": p.risk_level,
                 "Regions": p.active_regions if p.active_regions else "-",
-                "Date": p.created_at.strftime("%Y-%m-%d %H:%M")
+                "Date": ist_time.strftime("%Y-%m-%d %H:%M")
             })
         recent_df = pd.DataFrame(recent_data)
         st.dataframe(recent_df, use_container_width=True)
